@@ -51,7 +51,11 @@ namespace console
                 quantity--;
                 return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
+            
         }
     }
 }

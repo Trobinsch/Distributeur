@@ -10,9 +10,11 @@ namespace console
 {
     class Program
     {
+        static string montant;
         static decimal[] historiqueAchat = new decimal[24];
         static DateTime tempsAchat;
-        static decimal resteArgent, argentActuel;
+        static decimal resteArgent;
+        static decimal argentActuel;
         static List<Article> articles = new List<Article>();
 
         /// <summary>
@@ -25,16 +27,24 @@ namespace console
             articles.Add(new Article("Carampar", "A02", 5, (decimal)0.60));
             articles.Add(new Article("Avril", "A03", 2, (decimal)2.10));
             articles.Add(new Article("KokoKola", "A04", 1, (decimal)2.95));
+            Console.WriteLine("Nom   code  quantité  prix");
+            foreach (Article article in articles)
+            {
+                Console.WriteLine(article.Name +" "+article.Code + " " + article.Quantity + " " + article.Price);
+            }
             do
             {
+                
                 string action;
                 action = Console.ReadLine();
                 string[] separateurString = action.Split('(');
-
+                
                 switch (separateurString[0])
                 {
                     case "Insert":
-                        Insert(Convert.ToDecimal(separateurString[1].Remove(separateurString[1].Length - 1)));
+                        Console.WriteLine("Combien voulez-vous mettre");
+                        montant = Console.ReadLine();
+                        resteArgent = resteArgent + Convert.ToDecimal(montant);
                         break;
                     case "Choose":
                         Choose(separateurString[1].Split('"')[1]);
@@ -57,15 +67,7 @@ namespace console
                 }
             } while (true);
         }
-        
-        /// <summary>
-        /// Cette fonction permet d'ajouter un montant dans la machine
-        /// </summary>
-        /// <param name="amount">Amount est le montant que l'on veut ajouter</param>
-        static void Insert(decimal Amount)
-        {
-            resteArgent = resteArgent + Amount;
-        }
+
 
         /// <summary>
         /// Cette fonction permet de selectionner un article dans la machine
@@ -73,6 +75,7 @@ namespace console
         /// <param name="code">code est le numéro du produit à la sélectionner</param>
         static void Choose(string code)
         {
+            
             bool findArticleSuccess = false;
             foreach(Article article in articles)
             {
@@ -107,7 +110,19 @@ namespace console
                 }
                 
             }
-            if (!findArticleSuccess) Console.WriteLine("Invalid selection!");
+            if (findArticleSuccess == false)
+            {
+                Console.WriteLine("Invalid selection!");
+            }
+            else
+            {
+                Console.WriteLine("Nom   code  quantité  prix");
+                foreach (Article article in articles)
+                {
+                    Console.WriteLine(article.Name + " " + article.Code + " " + article.Quantity + " " + article.Price);
+                }
+            }
+            
 
         }
 
@@ -132,8 +147,6 @@ namespace console
             {
                 int listeCompte = 0;
                 int indexChange = 1;
-                
-
 
                     if (valeur != 0)
                     {
